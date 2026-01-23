@@ -13,6 +13,6 @@ Instructions:
  - Sample input .txt files are provided such as `input.txt`, `one-one input.txt`, `empty.txt`
      - Add any input .txt files you would like in the main folder `\COP4533-Programming-Assignment-1---Matching-and-Verifying`
  - Run `python main.py` to start the program and begin the algorithm
- - Output .txt files will be generated in the same folder `\COP4533-Programming-Assignment-1---Matching-and-Verifying`
+ - The `output.txt` file will be generated in the same folder `\COP4533-Programming-Assignment-1---Matching-and-Verifying` containing the matching results
 
 Task C Graph & Solution:
