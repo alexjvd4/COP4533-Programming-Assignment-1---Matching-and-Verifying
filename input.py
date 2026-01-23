@@ -4,27 +4,25 @@ Gale Shapely Algorithm & Verifier
 
 Input Handler input.py
 
-Alejandro Velez & Marco Fernandez
+Alejandro Velez
 """
 
 
 def create_priority_map(f, length):
     """
-    Creates a priority map for either the hospitals or the applicants/students
+    Creates a priority map for either the hospitals or the applicants/students.
 
-    Key is the hospital/student beginning at index 0
-    Value is the list of preferences, highest priority beginning at index 0
+    Key is the hospital/student beginning at hospital/student 1. Value is a map of with thekey being a list of
+    preferences, highest priority beginning at index 0, and the value being who/what it's paired with.
 
-    :str_line: A single string representing the priority list with spaces
+    :f: The opened input file
     :length: An integer representing the length of the priority list
-    :is_hospital: A boolean declaring if we are dealing with hospital or applicant priorities
 
     """
     priority_map = {}
     for i in range(length):
         str_line = f.readline().strip()
-        priority_map[i] = list(map(int, str_line.split()))
-
+        priority_map[i + 1] = {"preferences": list(map(int, str_line.split())), "pair": None}
     return priority_map
 
 
