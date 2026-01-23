@@ -25,10 +25,9 @@ for h_id, hospital in hospitals.items():
                 students[student]["pair"] = h_id
                 break
 
-"""
-The :hospitals: and :students: maps will hold the matching result of the Gale Shapely algorithm.
-Feel free to print them.
+# Output Handler: Algorithm results are loaded to output.txt
+with open("output.txt", "w") as f:
+    for hospital in hospitals:
+        f.write(str(hospital) + " " + str(hospitals[hospital]["pair"]) + "\n")
 
-print(hospitals)
-print(students)
-"""
+print("Matching results located in output.txt")
