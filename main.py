@@ -7,6 +7,8 @@ Main algorithm/program main.py
 Alejandro Velez & Marco Fernandez
 """
 import input
+import verifier
+import sys 
 
 hospitals = input.hospital_map
 students = input.student_map
@@ -35,3 +37,30 @@ if hospitals and students:
             f.write(str(hospital) + " " + str(hospitals[hospital]["pair"]) + "\n")
 
     print("Matching results located in output.txt")
+
+
+    if len(sys.argv) != 2:
+        print("INVALID")
+        sys.exit(0)
+
+    match_file = sys.argv[1]
+    hospital_lists = []
+    student_lists = []
+
+    for hospital in hospitals.values():
+        hospital_lists.append(hospital["preferences"])
+
+    for student in students.values():
+        student_lists.append(student["preferences"])
+
+    n,  = input.size, 
+    hospital_match, student_match = verifier.read_matching(match_file, n)
+
+    verifier.check_for_blocking_pairs(
+        n,
+        hospital_lists,
+        student_lists,
+        hospital_match,
+        student_match
+    )
+

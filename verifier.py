@@ -1,88 +1,6 @@
 # Marco Fernandez
 import sys
 
-def read_preferences(file_name): #cleaning up empty lines
-    try:
-        f = open(file_name, "r")
-        raw_lines = [line.strip() for line in f if line.strip()]
-        f.close()
-    except:
-        print("INVALID")
-        sys.exit(0)
-
-# for empty files
-    if len(raw_lines) == 0:
-        print("INVALID")
-        sys.exit(0)
-
-# first line should be n
-    try:
-        n = int(raw_lines[0])
-    except:
-        print("INVALID")
-        sys.exit(0)
-
-    if n <= 0:
-        print("INVALID")
-        sys.exit(0)
-
-    if len(raw_lines) != 1 + 2 * n:
-        print("INVALID")
-        sys.exit(0)
-
-    hosp_prefs = []
-    stud_prefs = []
-
-    # read hospital preference lists
-    for i in range(1, n + 1):
-        prefs = raw_lines[i].split()
-        if len(prefs) != n:
-            print("INVALID")
-            sys.exit(0)
-
-        try:
-            prefs = [int(x) for x in prefs]
-        except:
-            print("INVALID")
-            sys.exit(0)
-
-        if len(set(prefs)) != n:
-            print("INVALID")
-            sys.exit(0)
-
-        for p in prefs:
-            if p < 1 or p > n:
-                print("INVALID")
-                sys.exit(0)
-
-        hosp_prefs.append(prefs)
-
-    # read student preference lists
-    for i in range(n + 1, 2 * n + 1):
-        prefs = raw_lines[i].split()
-        if len(prefs) != n:
-            print("INVALID")
-            sys.exit(0)
-
-        try:
-            prefs = [int(x) for x in prefs]
-        except:
-            print("INVALID")
-            sys.exit(0)
-
-        if len(set(prefs)) != n:
-            print("INVALID")
-            sys.exit(0)
-
-        for p in prefs:
-            if p < 1 or p > n:
-                print("INVALID")
-                sys.exit(0)
-
-        stud_prefs.append(prefs)
-
-    return n, hosp_prefs, stud_prefs
-
 def read_matching(match_file, n):
     try:
         f = open(match_file, "r")
@@ -164,14 +82,23 @@ def check_for_blocking_pairs(n, hosp_prefs, stud_prefs, h_to_s, s_to_h):
 
 
 def main():
-    if len(sys.argv) != 3:
+    if len(sys.argv) != 2:
         print("INVALID")
         sys.exit(0)
 
-    pref_file = sys.argv[1]
-    match_file = sys.argv[2]
+    match_file = sys.argv[1]
+    hospital_maps = input.hospital_map
+    student_maps = input.student_map
+    hospital_lists = []
+    student_lists = []
 
-    n, hospital_lists, student_lists = read_preferences(pref_file)
+    for hospital in hospital_maps.values():
+        hospital_lists.append(hospital["preferences"])
+
+    for student in student_maps.values():
+        student_lists.append(student["preferences"])
+
+    n,  = input.size, 
     hospital_match, student_match = read_matching(match_file, n)
 
     check_for_blocking_pairs(
