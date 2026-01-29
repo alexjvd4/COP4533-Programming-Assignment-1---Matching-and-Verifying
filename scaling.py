@@ -1,8 +1,16 @@
-# Marco Fernandez
+"""
+COP4533 Algorithm Abstraction & Design Programming Assignment 1
+Gale Shapely Algorithm & Verifier
+
+Scalability scaling.py
+
+Marco Fernandez
+"""
 import random
 import time
 import verifier
 import matplotlib.pyplot as plt
+
 
 def generate_preferences(n):
     prefs = []
@@ -11,6 +19,7 @@ def generate_preferences(n):
         random.shuffle(arr)
         prefs.append(arr)
     return prefs
+
 
 def run_matching(hosp_prefs, stud_prefs):
     n = len(hosp_prefs)
@@ -43,6 +52,7 @@ def run_matching(hosp_prefs, stud_prefs):
 
     return h_to_s, s_to_h
 
+
 # assignment value parameters
 sizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
 
@@ -63,7 +73,7 @@ for n in sizes:
         stud_prefs,
         h_to_s,
         s_to_h
-        )
+    )
     end = time.perf_counter()
     verify_times.append(end - start)
 

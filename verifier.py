@@ -1,5 +1,13 @@
-# Marco Fernandez
+"""
+COP4533 Algorithm Abstraction & Design Programming Assignment 1
+Gale Shapely Algorithm & Verifier
+
+Verifier verifier.py
+
+Marco Fernandez
+"""
 import sys
+import input_handler
 
 
 def read_matching(match_file, n):
@@ -82,3 +90,36 @@ def check_for_blocking_pairs(n, hosp_prefs, stud_prefs, h_to_s, s_to_h):
                     return
 
     print("VALID STABLE")  # Correct output
+
+
+def main():
+    print("The verifier will check the previously generated output.txt file provided by the input file of your choice")
+    filename = input("Type the name of the txt file previously used. \n")
+    hospitals, students, n = input_handler.read_input_file(filename)
+
+    print("Running verifier ...")
+    print("Verifier results: \n")
+
+    match_file = "output.txt"
+    hospital_lists = []
+    student_lists = []
+
+    for hospital in hospitals.values():
+        hospital_lists.append(hospital["preferences"])
+
+    for student in students.values():
+        student_lists.append(student["preferences"])
+
+    hospital_match, student_match = read_matching(match_file, n)
+
+    check_for_blocking_pairs(
+        n,
+        hospital_lists,
+        student_lists,
+        hospital_match,
+        student_match
+    )
+
+
+if __name__ == "__main__":
+    main()

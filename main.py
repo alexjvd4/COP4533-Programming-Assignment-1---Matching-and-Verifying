@@ -4,56 +4,41 @@ Gale Shapely Algorithm & Verifier
 
 Main algorithm/program main.py
 
-Alejandro Velez & Marco Fernandez
+Alejandro Velez
 """
-import input
-import verifier
+import input_handler
 
-hospitals = input.hospital_map
-students = input.student_map
 
-if hospitals and students:
-    print("Gale Shapely Algorithm initiating ...")
-    for h_id, hospital in hospitals.items():
-        if hospital["pair"] is None:
-            for student in hospital["preferences"]:
-                if students[student]["pair"] is None:
-                    hospital["pair"] = student
-                    students[student]["pair"] = h_id
-                    break
-                elif students[student]["preferences"].index(students[student]["pair"]) > students[student][
-                    "preferences"].index(h_id):
-                    hospitals[students[student]["pair"]] = None
-                    hospital["pair"] = student
-                    students[student]["pair"] = h_id
-                    break
+def main():
+    print("Type the name of the txt file to use as input priority lists.")
+    filename = input("Some filenames in the codebase are input.txt, empty.txt, one-one input.txt \n")
+    hospitals, students, n = input_handler.read_input_file(filename)
 
-    print("Gale Shapely Algorithm successfully implemented!\n")
+    if hospitals and students:
+        print("Gale Shapely Algorithm initiating ...")
+        for h_id, hospital in hospitals.items():
+            if hospital["pair"] is None:
+                for student in hospital["preferences"]:
+                    if students[student]["pair"] is None:
+                        hospital["pair"] = student
+                        students[student]["pair"] = h_id
+                        break
+                    elif students[student]["preferences"].index(students[student]["pair"]) > students[student][
+                        "preferences"].index(h_id):
+                        hospitals[students[student]["pair"]] = None
+                        hospital["pair"] = student
+                        students[student]["pair"] = h_id
+                        break
 
-    # Output Handler: Algorithm results are loaded to output.txt
-    with open("output.txt", "w") as f:
-        for hospital in hospitals:
-            f.write(str(hospital) + " " + str(hospitals[hospital]["pair"]) + "\n")
+        print("Gale Shapely Algorithm successfully implemented!\n")
 
-    print("Matching results located in output.txt")
+        # Output Handler: Algorithm results are loaded to output.txt
+        with open("output.txt", "w") as f:
+            for hospital in hospitals:
+                f.write(str(hospital) + " " + str(hospitals[hospital]["pair"]) + "\n")
 
-    match_file = "output.txt"
-    hospital_lists = []
-    student_lists = []
+        print("Matching results located in output.txt\n")
 
-    for hospital in hospitals.values():
-        hospital_lists.append(hospital["preferences"])
 
-    for student in students.values():
-        student_lists.append(student["preferences"])
-
-    n = input.size
-    hospital_match, student_match = verifier.read_matching(match_file, n)
-
-    verifier.check_for_blocking_pairs(
-        n,
-        hospital_lists,
-        student_lists,
-        hospital_match,
-        student_match
-    )
+if __name__ == "__main__":
+    main()

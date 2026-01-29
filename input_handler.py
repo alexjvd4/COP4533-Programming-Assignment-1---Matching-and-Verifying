@@ -2,7 +2,7 @@
 COP4533 Algorithm Abstraction & Design Programming Assignment 1
 Gale Shapely Algorithm & Verifier
 
-Input Handler input.py
+Input Handler input_handler.py
 
 Alejandro Velez
 """
@@ -15,9 +15,9 @@ def create_priority_map(f, length):
     Key is the hospital/student beginning at hospital/student 1. Value is a map of with thekey being a list of
     preferences, highest priority beginning at index 0, and the value being who/what it's paired with.
 
-    :f: The opened input file
-    :length: An integer representing the length of the priority list
-
+    :param f: The opened input file
+    :param length: An integer representing the length of the priority list
+    :return: A priority map including all priority lists and empty pairs of all entities of the same category
     """
     priority_map = {}
     for i in range(length):
@@ -41,18 +41,26 @@ def create_priority_map(f, length):
     return priority_map
 
 
-print("Type the name of the txt file to use as input priority lists.")
-filename = input("Some filenames in the codebase are input.txt, empty.txt, one-one input.txt \n")
+def read_input_file(filename):
+    """
+    Reads the input file and returns two priority maps for the Gale Shapely algorithm as well as their equal size.
 
-with open(filename, "r") as f:
-    line = f.readline()
-    if line != '':
-        size = int(line)
-        print("\nLoading hospital priorities ...")
-        hospital_map = create_priority_map(f, size)
-        print("Loading student priorities ...\n")
-        student_map = create_priority_map(f, size)
-        if f.readline() != '':
-            raise ValueError("ERROR: Too many input records.")
-    else:
-        raise ValueError("ERROR: Empty input file.")
+    :param filename: An input filename string
+    :return: Hospital priority map, student priority map, the number of entities in each map
+    """
+    hospital_map = {}
+    student_map = {}
+    with open(filename, "r") as f:
+        line = f.readline()
+        if line != '':
+            size = int(line)
+            print("\nLoading hospital priorities ...")
+            hospital_map = create_priority_map(f, size)
+            print("Loading student priorities ...\n")
+            student_map = create_priority_map(f, size)
+            if f.readline() != '':
+                raise ValueError("ERROR: Too many input records.")
+        else:
+            raise ValueError("ERROR: Empty input file.")
+
+    return hospital_map, student_map, size
