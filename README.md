@@ -27,4 +27,14 @@ Task B - How to Run the Verifier and Assumptions:
        - Hospital/Student index ranges from 1 to n.
       
 Task C - Graph & Solution:
-(still need to do)
+To install matplot lib:
+- python -m pip install matplotlib
+To run scaling.py 
+- python scaling.py
+
+In the below graph, you will see that the verifier’s runtime increases much more rapidly than the matching algorithm. As n grows, you can see a steeper curve on the scalability graph. Since the verifier checks all possible hospital and student pairs for blocking pairs, it causes the runtime to grow faster than the matching algorithm’s process.
+
+<img width="788" height="677" alt="Screenshot 2026-01-29 121333" src="https://github.com/user-attachments/assets/98a1cd1c-78ce-4322-ae30-ff5dee28961e" />
+
+
+
