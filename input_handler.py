@@ -6,6 +6,7 @@ Input Handler input_handler.py
 
 Alejandro Velez
 """
+import sys
 
 
 def create_priority_map(f, length):
@@ -25,19 +26,24 @@ def create_priority_map(f, length):
         if str_line != '':
             try:
                 priority_list = list(map(int, str_line.split()))
-            except ValueError:
-                raise ValueError("ERROR: Non-numeric ID in priority list for selector " + str(i + 1))
+            except:
+                print("ERROR: Non-numeric ID in priority list for selector " + str(i + 1))
+                sys.exit(0)
             priority_list_len = len(priority_list)
             if priority_list_len != length:
-                raise ValueError("ERROR: Priority list length of selector " + str(
+                print("ERROR: Priority list length of selector " + str(
                     i + 1) + " does match the amount of options available.")
+                sys.exit(0)
             elif len(set(map(int, str_line.split()))) != priority_list_len:
-                raise ValueError("ERROR: Priority list elements of selector " + str(i + 1) + " are non-unique.")
+                print("ERROR: Priority list elements of selector " + str(i + 1) + " are non-unique.")
+                sys.exit(0)
             elif not all(0 <= p <= length for p in priority_list):
-                raise ValueError("ERROR: Invalid selector ID in priority list for selector " + str(i + 1))
+                print("ERROR: Invalid selector ID in priority list for selector " + str(i + 1))
+                sys.exit(0)
             priority_map[i + 1] = {"preferences": priority_list, "pair": None}
         else:
-            raise ValueError("ERROR: Not enough input records.")
+            print("ERROR: Not enough input records.")
+            sys.exit(0)
     return priority_map
 
 
@@ -59,8 +65,10 @@ def read_input_file(filename):
             print("Loading student priorities ...\n")
             student_map = create_priority_map(f, size)
             if f.readline() != '':
-                raise ValueError("ERROR: Too many input records.")
+                print("ERROR: Too many input records.")
+                sys.exit(0)
         else:
-            raise ValueError("ERROR: Empty input file.")
+            print("ERROR: Empty input file.")
+            sys.exit(0)
 
     return hospital_map, student_map, size

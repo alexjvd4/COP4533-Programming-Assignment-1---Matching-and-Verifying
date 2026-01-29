@@ -16,11 +16,13 @@ def read_matching(match_file, n):
         match_lines = [line.strip() for line in f if line.strip()]
         f.close()
     except:
-        print("INVALID")
+        print("INVALID\n")
+        print("Reason: Output file could not be opened.")
         sys.exit(0)
 
     if len(match_lines) != n:
-        print("INVALID")
+        print("INVALID\n")
+        print("Reason: Wrong number of matched lines. Did not equal to " + str(n) + " possible matches.")
         sys.exit(0)
 
     h_to_s = {}
@@ -29,23 +31,27 @@ def read_matching(match_file, n):
     for line in match_lines:
         parts = line.split()
         if len(parts) != 2:
-            print("INVALID")
+            print("INVALID\n")
+            print("Reason: Pair did not contain two values on the line.")
             sys.exit(0)
 
         try:
             h = int(parts[0])
             s = int(parts[1])
         except:
-            print("INVALID")
+            print("INVALID\n")
+            print("Reason: Non-numeric entity IDs.")
             sys.exit(0)
 
         if h < 1 or h > n or s < 1 or s > n:
-            print("INVALID")
+            print("INVALID\n")
+            print("Reason: ID out of range.")
             sys.exit(0)
 
         # for duplicate assignments
         if h in h_to_s or s in s_to_h:
-            print("INVALID")
+            print("INVALID\n")
+            print("Reason: Duplicate hospital or student assignment.")
             sys.exit(0)
 
         h_to_s[h] = s
@@ -86,7 +92,8 @@ def check_for_blocking_pairs(n, hosp_prefs, stud_prefs, h_to_s, s_to_h):
             # BLOCKING PAIR - CHECK
             if hosp_rank[h - 1][s] < hosp_rank[h - 1][current_student]:
                 if stud_rank[s - 1][h] < stud_rank[s - 1][current_hospital]:
-                    print("UNSTABLE")
+                    print("UNSTABLE\n")
+                    print("Blocking Pair: (Hospital: " + str(h) + ", Student: " + str(s) + ")\n")
                     return
 
     print("VALID STABLE")  # Correct output
