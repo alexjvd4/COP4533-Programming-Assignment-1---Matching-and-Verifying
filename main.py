@@ -8,7 +8,6 @@ Alejandro Velez & Marco Fernandez
 """
 import input
 import verifier
-import sys 
 
 hospitals = input.hospital_map
 students = input.student_map
@@ -38,12 +37,7 @@ if hospitals and students:
 
     print("Matching results located in output.txt")
 
-
-    if len(sys.argv) != 2:
-        print("INVALID")
-        sys.exit(0)
-
-    match_file = sys.argv[1]
+    match_file = "output.txt"
     hospital_lists = []
     student_lists = []
 
@@ -53,7 +47,7 @@ if hospitals and students:
     for student in students.values():
         student_lists.append(student["preferences"])
 
-    n,  = input.size, 
+    n = input.size
     hospital_match, student_match = verifier.read_matching(match_file, n)
 
     verifier.check_for_blocking_pairs(
@@ -63,4 +57,3 @@ if hospitals and students:
         hospital_match,
         student_match
     )
-
